@@ -2,6 +2,15 @@ from rest_framework import serializers
 from .models import *
 
 class TransactionCreateSerializer(serializers.ModelSerializer):
+    '''
+    @ Imr020467 - no valodation handled 
+    - cases 1: account number sent as empty string -> invalid data to db
+    - case 2 : account number of 50 chars - db raises 
+    ~ same for other user inputs.
+
+    - similar if not sending any field, say account number is missing on request body - db raises
+    
+    '''
     class Meta:
         model = Transaction
         fields = '__all__'
