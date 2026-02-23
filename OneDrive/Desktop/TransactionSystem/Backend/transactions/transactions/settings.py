@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Home',
     'rest_framework'
+    # Imr020467 : resister packages before your apps, rest_framework should go above Home
 ]
 
 MIDDLEWARE = [
