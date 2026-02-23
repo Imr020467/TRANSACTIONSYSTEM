@@ -26,6 +26,7 @@ class UserTransactionListAPIView(generics.ListAPIView):
     serializer_class = TransactionListSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    # @Imr020467: needs pagination 
     def get_queryset(self):
         return Transaction.objects.filter(
             user=self.request.user
