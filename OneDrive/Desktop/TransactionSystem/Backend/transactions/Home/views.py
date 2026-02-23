@@ -38,6 +38,7 @@ class TransactionDetailAPIView(generics.RetrieveAPIView):
     """
     serializer_class = TransactionDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
+    # @Imr020467 - transaction_id was not indexed on db - will take eternity for rows over 10k 
     lookup_field = 'transaction_id'
 
     def get_queryset(self):
@@ -47,19 +48,25 @@ class TransactionDetailAPIView(generics.RetrieveAPIView):
 class AdminTransactionListAPIView(generics.ListAPIView):
     """
     Admin can view all transactions in the system.
+    @Imr020467 - are we looking for separate REST based dashboard for admin ? 
+    - else can be shown on django admin portal only
+
     """
     serializer_class = TransactionListSerializer
     permission_classes = [permissions.IsAdminUser]
+    # @Imr020467 - objects.all() queries can break your system - as you are trying to fetch all at once - try pagination
     queryset = Transaction.objects.all().order_by('-created_at')
 
 
 class AdminTransactionActionAPIView(generics.UpdateAPIView):
     """
     Admin can approve or reject a transaction.
+    @Imr020467 - are we looking for separate REST based dashboard for admin ? 
     """
     serializer_class = AdminTransactionActionSerializer
     permission_classes = [permissions.IsAdminUser]
     lookup_field = 'transaction_id'
+    # @Imr020467 - objects.all() queries can break your system - as you are trying to fetch all at once - try pagination
     queryset = Transaction.objects.all()
 
 
