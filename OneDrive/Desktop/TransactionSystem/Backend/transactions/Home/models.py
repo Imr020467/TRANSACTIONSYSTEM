@@ -21,6 +21,11 @@ class Transaction(models.Model):
     )
 
     # Unique transaction ID (searchable)
+    '''
+    @Imr020467 - in case its searchable:
+         - db index should be provided
+         - concern: uuid4 indexing is un-optimized for any RDBMS, if your data size grows 100k+, you can experience lags on query 
+    '''
     transaction_id = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
